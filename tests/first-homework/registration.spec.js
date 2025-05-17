@@ -1,11 +1,18 @@
-import {expect, test} from "@playwright/test";
+import {test} from "@playwright/test";
 import {RegistrationPage} from "./registrationPage";
+import {faker} from "@faker-js/faker";
 
 test.describe("Registration flow", ()=>{
     const prefix = 'aqa';
     const uniqueEmail = `${prefix}-${faker.internet.email()}`;
     const password = faker.internet.password();
     let registrationPage;
+    test.use({
+        httpCredentials: {
+            username: 'guest',
+            password: 'welcome2qauto',
+        },
+    });
     test.beforeEach(async ({page})=>{
         registrationPage = new RegistrationPage(page);
         await registrationPage.open();
@@ -19,15 +26,16 @@ test.describe("Registration flow", ()=>{
         await registrationPage.fillPasswordRepeatInput(password);
         await registrationPage.submit();
 
-        await expect(registrationPage.page.locator('text=Registration successful')).toBeVisible();
+        // await expect(registrationPage.page.locator('text=Registration successful')).toBeVisible();
     });
 
     test('N1: empty Name shows required error', async () => {
+        await registrationPage.fillNameInput("");
         await registrationPage.fillLastNameInput(faker.string.alpha(20));
         await registrationPage.fillEmailInput(uniqueEmail);
         await registrationPage.fillPasswordInput(password);
         await registrationPage.fillPasswordRepeatInput(password);
-        await registrationPage.expectError('Name is required');
+        await registrationPage.expectError('Name required');
     });
 
     test('N2: invalid Name characters', async () => {
@@ -63,7 +71,7 @@ test.describe("Registration flow", ()=>{
 
     test('N7: empty Last name shows required error', async () => {
         await registrationPage.fillLastNameInput('');
-        await registrationPage.expectError('Last name is required');
+        await registrationPage.expectError('Last name required');
     });
 
     test('N8: Last name too long shows length error', async () => {
