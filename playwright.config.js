@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
-
+require('dotenv').config({ path: './.env' });
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -12,6 +12,10 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
+const BASE_URL = process.env.BASE_URL ?? 'https://qauto.forstudy.space/';
+const HTTP_USERNAME = process.env.HTTP_USERNAME ?? 'guest';
+const HTTP_PASSWORD = process.env.HTTP_PASSWORD ?? 'welcome2qauto';
+
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
@@ -27,7 +31,11 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
+    baseURL: BASE_URL,
+    httpCredentials: {
+      username: HTTP_USERNAME,
+      password: HTTP_PASSWORD,
+    },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -78,4 +86,3 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
-
