@@ -12,6 +12,10 @@ require('dotenv').config({ path: './.env' });
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
+const BASE_URL = process.env.BASE_URL ?? 'https://qauto.forstudy.space/';
+const HTTP_USERNAME = process.env.HTTP_USERNAME ?? 'guest';
+const HTTP_PASSWORD = process.env.HTTP_PASSWORD ?? 'welcome2qauto';
+
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
