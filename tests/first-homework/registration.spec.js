@@ -7,7 +7,7 @@ test.describe("Registration flow", ()=>{
     const password = faker.internet.password();
     let registrationPage;
     test.beforeEach(async ({page})=>{
-        registrationPage = new RegistrationPage();
+        registrationPage = new RegistrationPage(page);
         await registrationPage.open();
     });
 
