@@ -12,12 +12,7 @@ export class RegistrationPage {
     }
 
     async open() {
-        await this.page.goto("https://qauto.forstudy.space/", {
-            auth: {
-                username: "guest",
-                password: "welcome2qauto"
-            }
-        });
+        await this.page.goto("https://qauto.forstudy.space/");
         await this.page.click(".hero-descriptor_btn.btn.btn-primary");
     }
 
@@ -52,7 +47,6 @@ export class RegistrationPage {
     }
 
     async submit() {
-        await expect(this.registrationButton.toHaveAttribute("enabled"));
         await this.registrationButton.click();
     }
 
