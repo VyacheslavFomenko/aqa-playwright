@@ -1,5 +1,5 @@
 import {test} from "@playwright/test";
-import {RegistrationPage} from "./registrationPage";
+import {RegistrationPage} from "../../pages/registrationPage";
 import {faker} from "@faker-js/faker";
 
 test.describe("Registration flow", ()=>{
